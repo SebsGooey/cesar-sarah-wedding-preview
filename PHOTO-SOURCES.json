@@ -1,0 +1,42 @@
+[
+  {
+    "filename": "photo-01.jpg",
+    "url": "https://images.zola.com/974e3e9d-ac88-406a-81da-e4fdd787ee79?h=1000",
+    "bytes": 219940
+  },
+  {
+    "filename": "photo-02.jpg",
+    "url": "https://images.zola.com/885e736e-b1b1-47f6-acde-38e70ac1fff3?h=1000",
+    "bytes": 163911
+  },
+  {
+    "filename": "photo-03.jpg",
+    "url": "https://images.zola.com/919c0af0-1262-4f84-9d7d-03f26ba8a6b4?h=1000",
+    "bytes": 385688
+  },
+  {
+    "filename": "photo-04.jpg",
+    "url": "https://images.zola.com/39fd3d59-58d1-468b-8f89-ecbcda1f0fa0?h=1000",
+    "bytes": 171793
+  },
+  {
+    "filename": "photo-05.jpg",
+    "url": "https://images.zola.com/10bc6c2c-09fa-434b-b53b-bea6bdfc9f90?h=1000",
+    "bytes": 306684
+  },
+  {
+    "filename": "photo-06.jpg",
+    "url": "https://images.zola.com/0a11ce8f-e40f-4a46-a25f-d5e988f07929?h=1000",
+    "bytes": 218120
+  },
+  {
+    "filename": "photo-07.jpg",
+    "url": "https://images.zola.com/57a7f062-040a-4fcc-bf83-7250b605e978?w=1000",
+    "bytes": 93100
+  },
+  {
+    "filename": "photo-08.jpg",
+    "url": "https://images.zola.com/befa44fe-4765-495f-9af2-cda396a7a473?w=1000",
+    "bytes": 264056
+  }
+]
