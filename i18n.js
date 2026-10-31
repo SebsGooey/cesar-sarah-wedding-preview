@@ -533,8 +533,8 @@ window.INVITATION_COPY = {
     "Some outfit ideas"
   ],
   "dressExample1": [
-    "Vestidos, faldas o monos arreglados.",
-    "Dresses, skirts, or polished jumpsuits."
+    "Vestidos, faldas o pantalones elegantes.",
+    "Dresses, skirts, or elegant trousers."
   ],
   "dressExample2": [
     "Pantalones de vestir con camisa o blusa.",
