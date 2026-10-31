@@ -12,12 +12,19 @@
   function buildCalendar(events, language='es', now=new Date()) {
     const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Cesar and Sarah//Wedding//'+language.toUpperCase(),'CALSCALE:GREGORIAN','METHOD:PUBLISH'];
     for(const event of events){
-      lines.push('BEGIN:VEVENT','UID:cesar-sarah-'+event.id+'-2027@invitation.local','DTSTAMP:'+utc(now),'DTSTART:'+utc(event.start));
-      if(event.end) lines.push('DTEND:'+utc(event.end));
+      lines.push('BEGIN:VEVENT','UID:cesar-sarah-'+event.id+'-'+event.start.slice(0,10).replace(/-/g,'')+'@invitation.local','DTSTAMP:'+utc(now));
+      if(event.allDay){
+        lines.push('DTSTART;VALUE=DATE:'+event.start.replace(/-/g,''));
+        if(event.end)lines.push('DTEND;VALUE=DATE:'+event.end.replace(/-/g,''));
+      }else{
+        lines.push('DTSTART:'+utc(event.start));
+        if(event.end) lines.push('DTEND:'+utc(event.end));
+      }
       lines.push('SUMMARY:'+escapeICS(event.title[language]));
       if(event.location)lines.push('LOCATION:'+escapeICS(event.location));
       if(event.description)lines.push('DESCRIPTION:'+escapeICS(event.description[language]));
-      lines.push('URL:https://www.zola.com/wedding/sarahycesar/event','END:VEVENT');
+      if(event.url)lines.push('URL:'+escapeICS(event.url));
+      lines.push('END:VEVENT');
     }
     lines.push('END:VCALENDAR');return lines.map(fold).join('\r\n')+'\r\n';
   }

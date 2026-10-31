@@ -1,13 +1,4 @@
-Cesar & Sarah wedding preview
-
-This folder is the standalone GitHub Pages site.
-Published from the main branch, repository root.
-All assets use relative URLs so the site works under its repository path.
-
-Local preview: python3 -m http.server 4173
-Edit config.js for event details and i18n.js for English/Spanish wording.
-
-RSVP and song suggestions are demonstrations stored only in the visitor's browser. They are not sent to the couple.
-
-To take the preview offline, open repository Settings > Pages and unpublish.
-There is no automatic expiry. The noindex meta tag requests that search engines do not index this temporary preview; the site and repository remain public.
+Published from main / root with .nojekyll.
+Repository: https://github.com/SebsGooey/cesar-sarah-wedding-preview
+Preview: https://sebsgooey.github.io/cesar-sarah-wedding-preview/
+The public preview uses noindex metadata. RSVP records and server-side secrets are not stored in this repository.

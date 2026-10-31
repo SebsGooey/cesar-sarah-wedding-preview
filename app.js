@@ -22,12 +22,10 @@
   function toast(message){clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3600);}
   function readLocal(key){try{return JSON.parse(localStorage.getItem(config.storageKey+':'+key));}catch{return null;}}
   function saveLocal(key,value){try{localStorage.setItem(config.storageKey+':'+key,JSON.stringify(value));return true;}catch{toast(t('storageError'));return false;}}
-  function updateCountdown(){const seconds=Math.floor(Math.max(0,new Date(config.date).getTime()-Date.now())/1000);const parts={days:Math.floor(seconds/86400),hours:Math.floor(seconds/3600)%24,minutes:Math.floor(seconds/60)%60,seconds:seconds%60};Object.entries(parts).forEach(([key,value])=>$('#'+key).textContent=String(value).padStart(2,'0'));$('#countdown-label').textContent=t(seconds?'countdownLabel':'bigDay');}
+  function updateCountdown(){const seconds=Math.floor(Math.max(0,new Date(config.startTime).getTime()-Date.now())/1000);const parts={days:Math.floor(seconds/86400),hours:Math.floor(seconds/3600)%24,minutes:Math.floor(seconds/60)%60,seconds:seconds%60};Object.entries(parts).forEach(([key,value])=>$('#'+key).textContent=String(value).padStart(2,'0'));$('#countdown-label').textContent=t(seconds?'countdownLabel':'bigDay');}
   function dateLabel(value){return new Intl.DateTimeFormat(language==='es'?'es-CO':'en-US',{timeZone:config.timezone,weekday:'long',month:'long',day:'numeric'}).format(new Date(value));}
   function timeLabel(value){return new Intl.DateTimeFormat(language==='es'?'es-CO':'en-US',{timeZone:config.timezone,hour:'numeric',minute:'2-digit',hour12:language==='en'}).format(new Date(value));}
-  function renderEvents(){
-    $('#weekend-events').innerHTML=config.events.filter(e=>e.group==='extra').map(event=>`<article><p class="eyebrow">${escape(dateLabel(event.start))}</p>${icon(event.icon)}<h3>${escape(event.title[language])}</h3><p class="event-time">${escape(timeLabel(event.start))}${event.end?' – '+escape(timeLabel(event.end)):''}</p><p>${escape(event.description[language])}</p><button class="text-button" data-calendar="${event.id}">${t('addCalendar')} ${icon('calendar')}</button></article>`).join('');
-  }
+
   function photoPath(photo,small=false){return 'assets/photos/'+photo.file+(small?'-small':'')+'.jpg';}
   function photoSet(photo){return `${photoPath(photo,true)} ${photo.small}w, ${photoPath(photo)} ${photo.width}w`;}
   function renderGallery(){
@@ -45,7 +43,7 @@
     language=next;document.documentElement.lang=language;document.title='Cesar & Sarah · '+t('title');
     translate();$$('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===language)));
     try{localStorage.setItem(config.storageKey+':language',language);}catch{/* Optional preference. */}
-    renderEvents();updateGalleryLanguage();updateCountdown();updateMusicState();updateSlideButton();
+    updateGalleryLanguage();updateCountdown();updateMusicState();updateSlideButton();
     $('.menu-toggle').setAttribute('aria-label',t($('#nav').classList.contains('open')?'closeMenu':'openMenu'));
   }
   $$('[data-language]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.language)));
@@ -96,22 +94,43 @@
   const intro=(eyebrow,title,text,iconName='heart')=>`<svg class="outline-icon" aria-hidden="true"><use href="#i-${iconName}"/></svg><p class="eyebrow">${t(eyebrow)}</p><h2 id="modal-title">${t(title)}</h2><p>${t(text)}</p>`;
   const demo=key=>`<p class="form-note">${t(key)}</p>`;
   const modalTemplates={
-    rsvp:()=>`${intro('formEyebrow','formTitle','formIntro')}<form id="rsvp-form"><label for="guest-name">${t('nameLabel')}</label><input id="guest-name" name="name" autocomplete="name" placeholder="${escape(t('namePlaceholder'))}" maxlength="100" required><fieldset><legend>${t('attendance')}</legend><div class="radio-options"><label><input type="radio" name="attending" value="yes" required checked>${t('attendingYes')}</label><label><input type="radio" name="attending" value="no">${t('attendingNo')}</label></div></fieldset><div id="guest-details"><div class="form-row"><div><label for="guest-count">${t('partySize')}</label><select id="guest-count" name="guests">${[1,2,3,4].map(n=>`<option value="${n}">${n} ${t(n===1?'person':'people')}</option>`).join('')}</select></div><div><label for="guest-meal">${t('meal')}</label><select id="guest-meal" name="meal"><option value="standard">${t('standardMeal')}</option><option value="vegetarian">${t('vegetarian')}</option><option value="vegan">${t('vegan')}</option></select></div></div><label for="guest-notes">${t('allergies')}</label><textarea id="guest-notes" name="notes" maxlength="500" placeholder="${escape(t('notesPlaceholder'))}"></textarea></div>${demo('demoNote')}<button class="button button-primary" type="submit">${t('saveResponse')}${icon('arrow')}</button></form>`,
+    rsvp:()=>`${intro('formEyebrow','formTitle','formIntro')}<form id="rsvp-form"><label for="guest-name">${t('nameLabel')}</label><input id="guest-name" name="name" autocomplete="name" placeholder="${escape(t('namePlaceholder'))}" maxlength="100" required><fieldset><legend>${t('attendance')}</legend><div class="radio-options"><label><input type="radio" name="attending" value="yes" required checked>${t('attendingYes')}</label><label><input type="radio" name="attending" value="no">${t('attendingNo')}</label></div></fieldset><div id="guest-details"><label for="guest-count">${t('partySize')}</label><input id="guest-count" name="guests" type="number" min="1" max="50" step="1" value="1" inputmode="numeric" required aria-describedby="party-note"><p class="field-help" id="party-note">${t('partyNote')}</p><label for="guest-names">${t('guestNames')}</label><input id="guest-names" name="guestNames" maxlength="500" autocomplete="off"></div><label for="guest-contact">${t('contactLabel')}</label><input id="guest-contact" name="contact" maxlength="150" autocomplete="email"><label for="guest-notes">${t('messageLabel')}</label><textarea id="guest-notes" name="notes" maxlength="1000" placeholder="${escape(t('messagePlaceholder'))}"></textarea><div class="form-honeypot" aria-hidden="true"><label for="guest-website">Website</label><input id="guest-website" name="website" tabindex="-1" autocomplete="off"></div><p class="form-note">${t('rsvpPrivacy')}</p><p id="rsvp-error" class="form-error" role="alert" hidden></p><button class="button button-primary" type="submit">${t('saveResponse')}${icon('arrow')}</button></form>`,
     song:()=>`${intro('songFormEyebrow','songFormTitle','songFormIntro','music')}<form id="song-form"><label for="song-title">${t('songName')}</label><input id="song-title" name="song" required maxlength="120" placeholder="${escape(t('songPlaceholder'))}"><label for="song-artist">${t('artist')}</label><input id="song-artist" name="artist" required maxlength="120" placeholder="${escape(t('artistPlaceholder'))}"><label for="song-from">${t('songFrom')}</label><input id="song-from" name="from" maxlength="100" placeholder="${escape(t('songFromPlaceholder'))}">${demo('songDemo')}<button class="button button-primary" type="submit">${t('saveSong')}${icon('arrow')}</button></form>`,
-    dress:()=>`${intro('dressEyebrow','dressModalTitle','dressModalIntro','dress')}<div class="swatches" aria-label="${escape(t('swatches'))}"><span style="background:#b7a4c1"></span><span style="background:#919a81"></span><span style="background:#c39597"></span><span style="background:#83929f"></span></div><p>${t('dressWomen')}</p><p>${t('dressMen')}</p>`,
-    gifts:()=>`${intro('giftEyebrow','giftModalTitle','giftModalIntro','gift')}<p>${t('giftDescription')}</p><a class="button button-primary modal-link" href="${config.source}/registry" target="_blank" rel="noopener noreferrer">${t('registryLink')} ${icon('arrow')}</a>`,
-    notes:()=>`${intro('notesEyebrow','notesTitle','notesIntro','calendar')}<ul class="note-list">${['notesArrival','notesWalk','notesWeather','notesTravel','notesWeekend'].map(key=>`<li>${t(key)}</li>`).join('')}</ul><a class="text-button" href="${config.source}/event" target="_blank" rel="noopener noreferrer">${t('sourceSchedule')} ↗</a>`
+    dress:()=>intro('dressEyebrow','dressModalTitle','dressModalIntro','dress'),
+    gifts:()=>`${intro('giftEyebrow','giftModalTitle','giftModalIntro','gift')}<p>${t('giftDescription')}</p>`,
+    notes:()=>`${intro('notesEyebrow','notesTitle','notesIntro','calendar')}<ul class="note-list">${['notesDate','notesArrival','notesAddress','notesDress'].map(key=>`<li>${t(key)}</li>`).join('')}</ul>`
   };
-  function showSuccess(titleKey,messageKey){$('#modal-content').innerHTML=`<div class="success"><svg class="outline-icon" aria-hidden="true"><use href="#i-heart"/></svg><p class="eyebrow">${t('successEyebrow')}</p><h2 id="modal-title">${t(titleKey)}</h2><p>${t(messageKey)}</p>${demo('successDemo')}<button class="button button-primary" id="success-close">${t('backInvitation')}</button></div>`;$('#success-close').addEventListener('click',()=>modal.close());$('#success-close').focus();}
+  function showSuccess(titleKey,messageKey){$('#modal-content').innerHTML=`<div class="success"><svg class="outline-icon" aria-hidden="true"><use href="#i-heart"/></svg><p class="eyebrow">${t('successEyebrow')}</p><h2 id="modal-title">${t(titleKey)}</h2><p>${t(messageKey)}</p>${titleKey==='successSong'?demo('songDemo'):demo('rsvpUpdateNote')}<button class="button button-primary" id="success-close">${t('backInvitation')}</button></div>`;$('#success-close').addEventListener('click',()=>modal.close());$('#success-close').focus();}
   function openModal(type){
     if(!modalTemplates[type])return;previousFocus=document.activeElement;$('#modal-content').innerHTML=modalTemplates[type]();modal.showModal();document.body.style.overflow='hidden';scheduleSlide();
     if(type==='rsvp'){
       const form=$('#rsvp-form'),saved=readLocal('rsvp');
-      if(saved){form.elements.name.value=saved.name||'';form.elements.attending.value=saved.attending==='no'?'no':'yes';form.elements.guests.value=String(saved.guests||1);form.elements.meal.value=saved.meal||'standard';form.elements.notes.value=saved.notes||'';}
-      const attendanceChanged=()=>{const no=form.elements.attending.value==='no';$('#guest-details').hidden=no;$$('select,textarea',$('#guest-details')).forEach(el=>el.disabled=no);};
+      if(saved){for(const key of ['name','guestNames','contact','notes'])form.elements[key].value=saved[key]||'';form.elements.attending.value=saved.attending==='no'?'no':'yes';form.elements.guests.value=String(saved.guests||1);}
+      const attendanceChanged=()=>{const no=form.elements.attending.value==='no';$('#guest-details').hidden=no;$$('input',$('#guest-details')).forEach(el=>el.disabled=no);};
       $$('input[name="attending"]',form).forEach(el=>el.addEventListener('change',attendanceChanged));attendanceChanged();
       form.elements.name.addEventListener('input',()=>form.elements.name.setCustomValidity(''));
-      form.addEventListener('submit',e=>{e.preventDefault();const data=new FormData(form),name=String(data.get('name')).trim();if(!name){form.elements.name.setCustomValidity(t('emptyName'));form.elements.name.reportValidity();return;}const attending=data.get('attending');if(saveLocal('rsvp',{name,attending,guests:attending==='yes'?Number(data.get('guests')):0,meal:data.get('meal')||'',notes:String(data.get('notes')||'').trim(),savedAt:new Date().toISOString()}))showSuccess(attending==='yes'?'successYes':'successNo',attending==='yes'?'successYesText':'successNoText');});
+      form.addEventListener('submit',async e=>{
+        e.preventDefault();const data=new FormData(form),name=String(data.get('name')).trim();
+        if(!name){form.elements.name.setCustomValidity(t('emptyName'));form.elements.name.reportValidity();return;}
+        const button=$('button[type="submit"]',form),error=$('#rsvp-error');
+        if(button.disabled)return;
+        const attending=data.get('attending');
+        const previous=readLocal('rsvp-receipt')||window.rsvpReceipt;
+        const receipt=previous||{id:crypto.randomUUID(),editToken:crypto.randomUUID()};
+        window.rsvpReceipt=receipt;
+        try{localStorage.setItem(config.storageKey+':rsvp-receipt',JSON.stringify(receipt));}catch{/* In-memory retry remains available. */}
+        const payload={...receipt,name,attending,guests:attending==='yes'?Number(data.get('guests')):0,guestNames:String(data.get('guestNames')||'').trim(),contact:String(data.get('contact')||'').trim(),notes:String(data.get('notes')||'').trim(),language,website:String(data.get('website')||'')};
+        button.disabled=true;button.textContent=t('rsvpSending');error.hidden=true;form.setAttribute('aria-busy','true');
+        const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+        try{
+          const response=await fetch(config.rsvpEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal,credentials:'omit'});
+          const result=await response.json();
+          if(!response.ok||!result.ok)throw new Error(result.error||'network');
+          try{localStorage.setItem(config.storageKey+':rsvp',JSON.stringify({...payload,editToken:undefined,savedAt:result.savedAt}));}catch{/* A confirmed server save does not depend on local storage. */}
+          if(modal.open&&form.isConnected)showSuccess(attending==='yes'?'successYes':'successNo',attending==='yes'?'successYesText':'successNoText');else toast(t('rsvpSaved'));
+        }catch(err){error.textContent=t(err.message==='rate'?'rsvpRateError':'rsvpError');error.hidden=false;error.tabIndex=-1;error.focus();}
+        finally{clearTimeout(timeout);button.disabled=false;button.innerHTML=t('saveResponse')+icon('arrow');form.removeAttribute('aria-busy');}
+      });
     }
     if(type==='song')$('#song-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget),song=String(data.get('song')).trim(),artist=String(data.get('artist')).trim();if(!song||!artist){toast(t('emptySong'));return;}const previous=readLocal('songs'),songs=Array.isArray(previous)?previous:[];songs.push({song,artist,from:String(data.get('from')||'').trim(),savedAt:new Date().toISOString()});if(saveLocal('songs',songs))showSuccess('successSong','successSongText');});
   }
