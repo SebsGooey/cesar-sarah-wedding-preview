@@ -369,8 +369,8 @@ window.INVITATION_COPY = {
     "We’re so excited to celebrate with you! RSVP to our civil wedding."
   ],
   "songDemo": [
-    "Esta sugerencia se guarda solo en este dispositivo; todavía no se envía a los anfitriones.",
-    "This suggestion is saved only on this device; it is not sent to the hosts yet."
+    "Tu sugerencia llegará a Cesar y Sarah en una lista compartida para preparar el PDF del DJ.",
+    "Your request will go to Cesar and Sarah in a shared list so we can prepare the DJ PDF."
   ],
   "nameLabel": [
     "Nombre y apellido *",
@@ -449,8 +449,16 @@ window.INVITATION_COPY = {
     "Your song, our dance floor."
   ],
   "songFormIntro": [
-    "Ayúdanos a crear una playlist que nos haga bailar a todos.",
-    "Help us make a playlist that gets everyone dancing."
+    "Ayúdanos a elegir la música de la boda. Tu sugerencia se añadirá a nuestra lista compartida para preparar el PDF del DJ.",
+    "Help us choose the wedding music. Your request will be added to our shared list for the DJ PDF."
+  ],
+  "songFrameTitle": [
+    "Formulario para sugerir canciones",
+    "Song request form"
+  ],
+  "songOpenForm": [
+    "Abrir formulario en otra pestaña",
+    "Open the form in a new tab"
   ],
   "songName": [
     "Nombre de la canción *",
@@ -509,8 +517,8 @@ window.INVITATION_COPY = {
     "Let love play!"
   ],
   "successSongText": [
-    "Una canción más para una noche inolvidable.",
-    "One more song for an unforgettable night."
+    "Tu sugerencia se añadió a nuestra lista compartida.",
+    "Your request was added to our shared list."
   ],
   "backInvitation": [
     "Volver a la invitación",
