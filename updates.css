@@ -19,3 +19,6 @@
 @media(max-width:700px){.civil-venue{grid-template-columns:1fr;margin-top:32px}.civil-venue-intro{border-right:0;border-bottom:1px solid #dcd8dc;padding:34px 24px}.civil-venue-intro h3{font-size:50px}.civil-venue-details{padding:30px 25px}.civil-venue-details p{font-size:26px}.civil-venue-details .button{width:100%}.rsvp-frame{height:70dvh;min-height:400px}}
 
 .field-help{font-size:.75rem;color:var(--muted);margin:.4rem 0 1rem;line-height:1.5}.form-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}.form-error{color:#8d384d;font-size:.85rem;line-height:1.6;background:#fbf0f2;padding:12px;border-radius:8px}.button:disabled{opacity:.65;cursor:wait}#rsvp-form input[type=number]{max-width:120px}
+
+#modal.song-request-dialog{max-width:780px;width:calc(100% - 24px);padding:38px 28px 24px}#modal.song-request-dialog #modal-content{padding:0}#modal.song-request-dialog .form-intro{padding:0 12px}.song-request-frame{display:block;width:100%;height:66vh;min-height:460px;border:0;background:#fffdf9;border-radius:3px}.song-open-form{margin:8px 0 12px}
+@media(max-width:700px){#modal.song-request-dialog{padding:42px 12px 20px}.song-request-frame{height:65dvh;min-height:360px}.song-open-form{width:100%}}
