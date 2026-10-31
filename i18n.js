@@ -225,8 +225,8 @@ window.INVITATION_COPY = {
     "For the occasion"
   ],
   "dressIntro": [
-    "Código de vestimenta: casual elegante.",
-    "Dress code: smart casual."
+    "Casual elegante para nuestra boda civil.",
+    "Smart casual for our civil wedding."
   ],
   "dressButton": [
     "Ver dress code",
@@ -525,8 +525,24 @@ window.INVITATION_COPY = {
     "A special day."
   ],
   "dressModalIntro": [
-    "El código de vestimenta para nuestra boda civil es casual elegante.",
-    "The dress code for our civil wedding is smart casual."
+    "El código de vestimenta es casual elegante.",
+    "The dress code is smart casual."
+  ],
+  "dressExamplesTitle": [
+    "Algunas ideas",
+    "Some outfit ideas"
+  ],
+  "dressExample1": [
+    "Vestidos, faldas o monos arreglados.",
+    "Dresses, skirts, or polished jumpsuits."
+  ],
+  "dressExample2": [
+    "Pantalones de vestir con camisa o blusa.",
+    "Dress pants with a shirt or blouse."
+  ],
+  "dressExample3": [
+    "Una chaqueta ligera para completar el conjunto.",
+    "A lightweight jacket to complete the outfit."
   ],
   "dressWomen": [
     "",
