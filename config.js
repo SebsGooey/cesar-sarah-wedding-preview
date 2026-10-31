@@ -13,7 +13,7 @@ window.INVITATION = {
   "timezone": "America/New_York",
   "source": "https://www.zola.com/wedding/sarahycesar",
   "hashtag": "#CesarYSarah",
-  "music": "assets/our-little-waltz.mp3",
+  "musicVideoId": "kR9PUUXLvCs",
   "storageKey": "cesar-sarah-civil-v1",
   "slideshowInterval": 6500,
   "heroPhotos": [
