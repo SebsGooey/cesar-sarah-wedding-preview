@@ -225,8 +225,8 @@ window.INVITATION_COPY = {
     "For the occasion"
   ],
   "dressIntro": [
-    "Pronto compartiremos el código de vestimenta<br>para nuestra celebración.",
-    "We’ll share the dress code<br>for our celebration soon."
+    "Código de vestimenta: casual elegante.",
+    "Dress code: smart casual."
   ],
   "dressButton": [
     "Ver dress code",
@@ -525,8 +525,8 @@ window.INVITATION_COPY = {
     "A special day."
   ],
   "dressModalIntro": [
-    "El código de vestimenta para nuestra boda civil se anunciará próximamente.",
-    "The dress code for our civil wedding will be announced soon."
+    "El código de vestimenta para nuestra boda civil es casual elegante.",
+    "The dress code for our civil wedding is smart casual."
   ],
   "dressWomen": [
     "",
