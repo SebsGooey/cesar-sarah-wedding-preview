@@ -629,8 +629,8 @@ window.INVITATION_COPY = {
     "1780 Aspen Ln, Weston, FL."
   ],
   "notesDress": [
-    "El código de vestimenta se anunciará próximamente.",
-    "The dress code will be announced soon."
+    "El código de vestimenta es casual elegante.",
+    "The dress code is smart casual."
   ],
   "rsvpSetup": [
     "Las confirmaciones abrirán pronto. Si necesitas confirmar ahora, contacta directamente a Cesar y Sarah.",

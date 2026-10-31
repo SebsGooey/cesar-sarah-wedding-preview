@@ -10,4 +10,4 @@ RSVP responses are stored in a private D1 database through the Sites service con
 
 The song suggestion form is still a clearly labeled local-only preview.
 
-Edit event details in config.js and bilingual copy in i18n.js. There is no invented end time, dress code, or RSVP deadline. To preview: python3 -m http.server 4173. GitHub Pages publishes the main branch at the repository root.
+Edit event details in config.js and bilingual copy in i18n.js. Dress code: smart casual. The end time and RSVP deadline have not been set. To preview: python3 -m http.server 4173. GitHub Pages publishes the main branch at the repository root.
