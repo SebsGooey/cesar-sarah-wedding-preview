@@ -7,22 +7,12 @@
   let language='es';
   try{const saved=localStorage.getItem(config.storageKey+':language');if(saved==='en'||saved==='es')language=saved;}catch{/* Language still works without storage. */}
   const t=key=>copy[key]?.[language==='en'?1:0]??key;
-  const musicPlayerShell=$('#music-player-shell'),musicButton=$('#music-toggle'),welcome=$('#welcome-screen'),modal=$('#modal'),lightbox=$('#lightbox');
+  const music=$('#music'),musicButton=$('#music-toggle'),welcome=$('#welcome-screen'),modal=$('#modal'),lightbox=$('#lightbox');
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   let toastTimer,previousFocus,photoOpener,photoIndex=0,entered=false;
   let slideIndex=0,activeLayer=0,slideTimer,slideRequest=0,userPaused=reducedMotion.matches,heroVisible=true,heroHovered=false,heroFocused=false;
   const hero=$('#hero-slideshow'),layers=$$('.hero-slide');
-  let musicPlayer=null,musicReady=false,musicRequested=false,musicIsPlaying=false;
-  function initializeMusicPlayer(){
-    if(!window.YT||!window.YT.Player)return;
-    musicPlayer=new window.YT.Player('music-player',{height:'200',width:'200',videoId:config.musicVideoId,playerVars:{autoplay:0,controls:1,loop:1,playlist:config.musicVideoId,playsinline:1,origin:window.location.origin},events:{
-      onReady(){musicReady=true;musicPlayer.setVolume(40);musicPlayer.getIframe().title=t('songTrack');if(musicRequested)musicPlayer.playVideo();},
-      onStateChange(event){musicIsPlaying=event.data===window.YT.PlayerState.PLAYING;updateMusicState();},
-      onError(){musicRequested=false;musicIsPlaying=false;musicPlayerShell.classList.remove('is-visible');toast(t('musicError'));updateMusicState();}
-    }});
-  }
-  window.onYouTubeIframeAPIReady=initializeMusicPlayer;
-  const youtubeApi=document.createElement('script');youtubeApi.src='https://www.youtube.com/iframe_api';youtubeApi.async=true;document.head.append(youtubeApi);
+  music.src=config.music;music.volume=.4;
   function translate(root=document){
     $$('[data-i18n]',root).forEach(el=>el.textContent=t(el.dataset.i18n));
     $$('[data-i18n-html]',root).forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));
@@ -46,9 +36,8 @@
     layers.forEach((layer,index)=>{if(index===activeLayer)$('img',layer).alt=config.photos[config.heroPhotos[slideIndex]].alt[language];});
     if(lightbox.open)displayPhoto(photoIndex);
   }
-  function updateMusicState(){musicButton.classList.toggle('is-playing',musicIsPlaying);musicButton.setAttribute('aria-pressed',String(musicIsPlaying));musicButton.setAttribute('aria-label',t(musicIsPlaying?'pauseMusic':'playMusic'));$('#music-label').textContent=t(musicIsPlaying?'playing':'music');}
-  function playMusic(){musicRequested=true;musicPlayerShell.classList.add('is-visible');if(musicReady&&musicPlayer)musicPlayer.playVideo();else toast(t('musicError'));updateMusicState();}
-  function pauseMusic(){musicRequested=false;if(musicReady&&musicPlayer)musicPlayer.pauseVideo();musicIsPlaying=false;musicPlayerShell.classList.remove('is-visible');updateMusicState();}
+  function updateMusicState(){const playing=!music.paused;musicButton.classList.toggle('is-playing',playing);musicButton.setAttribute('aria-pressed',String(playing));musicButton.setAttribute('aria-label',t(playing?'pauseMusic':'playMusic'));$('#music-label').textContent=t(playing?'playing':'music');}
+  async function playMusic(){try{await music.play();}catch{toast(t('musicError'));}updateMusicState();}
   function updateSlideButton(){const button=$('#slide-toggle');button.setAttribute('aria-pressed',String(userPaused));button.setAttribute('aria-label',t(userPaused?'playSlides':'pauseSlides'));button.firstElementChild.textContent=userPaused?'▷':'Ⅱ';}
   function setLanguage(next){
     language=next;document.documentElement.lang=language;document.title='Cesar & Sarah · '+t('title');
@@ -95,12 +84,12 @@
   function enterInvitation(withMusic){
     if(entered)return;entered=true;
     // Start audio directly in the click gesture so iOS permits playback.
-    if(withMusic)playMusic();else pauseMusic();
+    if(withMusic)playMusic();else{music.pause();updateMusicState();}
     welcome.close();document.body.style.overflow='';$('#hero-title').tabIndex=-1;$('#hero-title').focus({preventScroll:true});scheduleSlide();
   }
   $('#enter-music').addEventListener('click',()=>enterInvitation(true));$('#enter-silent').addEventListener('click',()=>enterInvitation(false));
   welcome.addEventListener('cancel',e=>{e.preventDefault();enterInvitation(false);});
-  musicButton.addEventListener('click',()=>{if(musicIsPlaying)pauseMusic();else playMusic();});
+  musicButton.addEventListener('click',()=>{if(music.paused)playMusic();else music.pause();});music.addEventListener('play',updateMusicState);music.addEventListener('pause',updateMusicState);
 
   const intro=(eyebrow,title,text,iconName='heart')=>`<svg class="outline-icon" aria-hidden="true"><use href="#i-${iconName}"/></svg><p class="eyebrow">${t(eyebrow)}</p><h2 id="modal-title">${t(title)}</h2><p>${t(text)}</p>`;
   const demo=key=>`<p class="form-note">${t(key)}</p>`;

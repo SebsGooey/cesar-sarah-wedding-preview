@@ -340,10 +340,6 @@ window.INVITATION_COPY = {
     "Nuestra canción para empezar: My Only One · Sebastián Yatra & Isabela Merced",
     "Our song to begin with: My Only One · Sebastián Yatra & Isabela Merced"
   ],
-  "songTrack": [
-    "Reproductor de My Only One de Sebastián Yatra e Isabela Merced",
-    "My Only One player by Sebastián Yatra and Isabela Merced"
-  ],
   "enterMusic": [
     "Ingresar con música",
     "Enter with music"

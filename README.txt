@@ -4,7 +4,7 @@ Sunday December 27, 2026, 4:00 p.m. EST
 
 Live: https://sebsgooey.github.io/cesar-sarah-wedding-preview/
 
-English/Spanish invitation, optional music, automatic photo slideshow, mobile and desktop layouts, accurate calendar download, and a real RSVP form. Photos are from the couple’s Zola wedding website; see PHOTO-SOURCES.json. The welcome soundtrack uses the official YouTube player for “My Only One” by Sebastián Yatra and Isabela Merced.
+English/Spanish invitation, optional music, automatic photo slideshow, mobile and desktop layouts, accurate calendar download, and a real RSVP form. Photos are from the couple’s Zola wedding website; see PHOTO-SOURCES.json. The welcome soundtrack plays the provided “My Only One” MP3.
 
 RSVP responses are stored in a private D1 database through the Sites service configured in config.js. Guests need no account. The hosts sign into the private guest list using their shared username and password, and can download a CSV for Google Sheets or Excel. The shared Google Sheet does not sync automatically. Repeat submissions on the same browser update the existing response. Clearing browser storage loses the update token.
 

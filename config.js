@@ -13,7 +13,7 @@ window.INVITATION = {
   "timezone": "America/New_York",
   "source": "https://www.zola.com/wedding/sarahycesar",
   "hashtag": "#CesarYSarah",
-  "musicVideoId": "kR9PUUXLvCs",
+  "music": "assets/my-only-one.mp3",
   "storageKey": "cesar-sarah-civil-v1",
   "slideshowInterval": 6500,
   "heroPhotos": [
